@@ -17,7 +17,7 @@ There are 3 components to running Mr.Lamp
 
 2.) Run index.js and configure firebase
 
-3.) set up Std Lib to phone number
+3.) set up Std Lib to phone number using messengerbird
 
 
 
