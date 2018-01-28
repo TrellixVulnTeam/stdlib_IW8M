@@ -1,8 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var stringSimilarity = require('string-similarity');
-const accountSid = 'AC004ae7f6ad91ec71278341f1d9104c0d';
-const authToken = '7a60e6f446715025992013e8c539f81e';
+const accountSid = 'someotherkey';
+const authToken = 'somekey';
 const client = require('twilio')(accountSid, authToken);
 var app = express();
 var firebase = require('firebase').initializeApp({
