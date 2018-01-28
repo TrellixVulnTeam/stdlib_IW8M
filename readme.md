@@ -14,7 +14,9 @@ How to run
 There are 3 components to running Mr.Lamp
 
 1.) Flash arduino code on ESP8266, modify for correct firebase configuration.
+
 2.) Run index.js and configure firebase
+
 3.) set up Std Lib to phone number
 
 
