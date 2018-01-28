@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+	<link href='https://fonts.googleapis.com/css?family=Lato:400,300italic,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://cdn.flybase.io/css/base.css">
+	<link rel="stylesheet" href="https://cdn.flybase.io/css/light.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css">
+	<title>Live Blog, powered by Flybase, StdLib and Twilio</title>
+	<style>
+		#postsDiv p{
+			background: #efefef;
+			border: 1px #999 solid;
+			padding: 5px;
+			margin: 5px;
+		}
+		#postsDiv img{
+			width: 60%;
+			height: auto;
+		}
+	</style>
+</head>
+<body>
+	<header role="banner">
+	    <div class="container">
+			<div class="cf"><a href="https://github.com/flybaseio/flybase-stdlib" title="See on Github" class="button button-primary pull-right"><span class="octicon octicon-octoface"></span> View it on GitHub</a></div>
+			<h1><span class="mega-octicon octicon-beaker"></span> Live Blog</h1>
+			<p>Powered by Flybase, Twilio and Stdlib</p>
+	    </div>
+	</header>
+	<div class="container">
+		<section>
+			<fieldset>
+				<div>
+					<span id="usersonline">( <span id="ocnt">0</span> Users online )</span>
+				</div>
+				<div id="postsDiv"></dic>
+			</fieldset>
+		</section>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="https://cdn.flybase.io/flybase.js"></script>
+	<script>
+		$(function(){
+			var postsRef = new Flybase("<%= apikey %>", "<%= appname %>", "<%= collection %>");
+			postsRef.on('online', function (data) {
+				var online = data.value();
+				$("#ocnt").text( online );
+			});
+			postsRef.once('value', function (data) {
+				console.log( "we found " + data.count() + " posts");
+				data.forEach( function(post){
+					displayPost(post.value() );
+				});
+			});
+			postsRef.on('added', function (data) {
+				console.log( data );
+				displayPost( data.value() );
+			});
+			function displayPost(post) {
+				var newDate = new Date();
+				newDate.setTime(post.tstamp*1000);
+				$('<p/>')
+					.attr("id",post._id)
+					.html( "<strong>" + getFormattedDate( newDate ) + "</strong>:<br />" + post.textMessage)
+					.appendTo( $('#postsDiv') );
+				$('#postsDiv')[0].scrollTop = $('#postsDiv')[0].scrollHeight;
+			}
+		});
+		function getFormattedDate ( date ) {
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			var hour = date.getHours();
+			var min = date.getMinutes();
+			var sec = date.getSeconds();
+			month = (month < 10 ? "0" : "") + month;
+			day = (day < 10 ? "0" : "") + day;
+			hour = (hour < 10 ? "0" : "") + hour;
+			min = (min < 10 ? "0" : "") + min;
+			sec = (sec < 10 ? "0" : "") + sec;
+			var str = date.getFullYear() + "-" + month + "-" + day + " @ " +  hour + ":" + min;
+			return str;
+		}
+	</script>
+</body>
+</html>
