@@ -21,8 +21,8 @@
 #include <FirebaseArduino.h>
 
 // Set these to run example.
-#define FIREBASE_HOST "textAutomation.firebaseio.com"
-#define FIREBASE_AUTH "gDwhFgip9P5xUiXY8VbnUFhJWGTarWkh2lUlevsE"
+#define FIREBASE_HOST "some key g"
+#define FIREBASE_AUTH "some other key g"
 #define WIFI_SSID "Taha"
 #define WIFI_PASSWORD "daami123"
 void setup() {
